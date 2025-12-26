@@ -61,6 +61,8 @@ pub fn next_token(program: &str) -> (Token, &str) {
                 ')' => (Token::RPAREN, &program[1..]),
                 '{' => (Token::LBRACE, &program[1..]),
                 '}' => (Token::RBRACE, &program[1..]),
+                'a'..='z' | 'A'..='Z' => read_ident(program),
+                '0'..='9' => read_int(program),
                 _ => (Token::ILLEGAL(char), &program[1..]),
             };
         }
@@ -76,6 +78,48 @@ pub fn eat_whitespace(string: &str) -> &str {
         }
     }
     return "";
+}
+
+pub fn read_ident(string: &str) -> (Token, &str) {
+    // an identifier is [a-zA-Z_]+
+    fn is_letter(c: char) -> bool {
+        c.is_alphabetic() || c == '_'
+    }
+
+    // determine if an identifier is a keyword
+    fn lookup_ident(string: &str) -> Token {
+        match string {
+            "let" => Token::LET,
+            "fn" => Token::FUNCTION,
+            _ => Token::IDENT(String::from(string)),
+        }
+    }
+
+    for (index, character) in string.chars().enumerate() {
+        if !is_letter(character) {
+            return (lookup_ident(&string[..index]), &string[index..]);
+        }
+    }
+
+    return (lookup_ident(string), "");
+}
+
+pub fn read_int(string: &str) -> (Token, &str) {
+    for (index, character) in string.chars().enumerate() {
+        if !character.is_numeric() {
+            let val = match usize::from_str_radix(&string[..index], 10) {
+                Ok(value) => value,
+                Err(_) => unreachable!(),
+            };
+            return (Token::INT(val), &string[index..]);
+        }
+    }
+
+    let val = match usize::from_str_radix(&string, 10) {
+        Ok(value) => value,
+        Err(_) => unreachable!(),
+    };
+    return (Token::INT(val), "");
 }
 
 #[cfg(test)]
@@ -155,7 +199,7 @@ mod tests {
             Token::RBRACE,
             Token::SEMICOLON,
             Token::LET,
-            Token::IDENT(String::from("ten")),
+            Token::IDENT(String::from("result")),
             Token::ASSIGN,
             Token::IDENT(String::from("add")),
             Token::LPAREN,
