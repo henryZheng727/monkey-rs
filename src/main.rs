@@ -1,4 +1,5 @@
 mod lexer;
+mod parser;
 
 use std::io::Write;
 
@@ -19,8 +20,10 @@ fn main() {
             break;
         }
 
-        // lex input
+        // lex input and validate tokens
         let tokens = lexer::lex(&input);
+
+        // parse input
 
         // print results
         println!("{:?}", tokens);
