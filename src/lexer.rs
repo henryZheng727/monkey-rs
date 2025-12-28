@@ -108,7 +108,7 @@ fn next_token(program: &str) -> (Token, &str) {
 fn eat_whitespace(string: &str) -> &str {
     // collect all whitespace at start of string
     let mut first_non_whitespace = string.len();
-    for (index, char) in string.chars().enumerate() {
+    for (index, char) in string.char_indices() {
         if !char.is_whitespace() {
             first_non_whitespace = index;
             break;
@@ -140,24 +140,24 @@ fn read_ident(string: &str) -> (Token, &str) {
     }
 
     // collect all letters at start of string
-    let mut first_non_whitespace = string.len();
-    for (index, char) in string.chars().enumerate() {
+    let mut first_non_letter = string.len();
+    for (index, char) in string.char_indices() {
         if !is_letter(char) {
-            first_non_whitespace = index;
+            first_non_letter = index;
             break;
         }
     }
 
     // construct a token
-    let ident = &string[..first_non_whitespace];
-    let rest = &string[first_non_whitespace..];
+    let ident = &string[..first_non_letter];
+    let rest = &string[first_non_letter..];
     return (lookup_ident(ident), rest);
 }
 
 fn read_int(string: &str) -> (Token, &str) {
     // collect all integer characters at start of string
     let mut first_non_int = string.len();
-    for (index, char) in string.chars().enumerate() {
+    for (index, char) in string.char_indices() {
         if !char.is_numeric() {
             first_non_int = index;
             break;
