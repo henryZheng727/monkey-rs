@@ -1,7 +1,5 @@
+use super::*;
 use crate::lexer::token::Token;
-use crate::parser::ast::Exp;
-use crate::parser::ast::Stmnt;
-use crate::parser::parse;
 
 #[test]
 fn test_parse_let_small() {
@@ -11,7 +9,7 @@ fn test_parse_let_small() {
         Token::ASSIGN,
         Token::INT(5),
     ];
-    let expected = vec![Stmnt::LET(String::from("x"), Exp::INT(5))];
-    let actual = parse(test_tokens);
+    let expected = Stmnt::LET(String::from("x"), Exp::INT(5));
+    let (actual, _) = parse_let(&test_tokens);
     assert_eq!(expected, actual)
 }
