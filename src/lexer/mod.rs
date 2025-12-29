@@ -1,5 +1,6 @@
 pub mod token;
 
+#[cfg(test)]
 mod tests;
 
 use crate::lexer::token::Token;
