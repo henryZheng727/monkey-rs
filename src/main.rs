@@ -6,7 +6,7 @@ use std::io::Write;
 fn main() {
     loop {
         // display the prompt
-        print!(">> ");
+        let _ = print!(">> ");
         let _ = std::io::stdout().flush();
 
         // read input
