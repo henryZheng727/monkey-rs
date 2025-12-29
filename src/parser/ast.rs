@@ -1,4 +1,5 @@
 // Statements
+#[derive(Debug, PartialEq, Clone)]
 pub enum Stmnt {
     LET(String, Exp),       // let <id> = <exp>
     RETURN(Exp),            // return <exp>
@@ -7,6 +8,7 @@ pub enum Stmnt {
 }
 
 // Expressions
+#[derive(Debug, PartialEq, Clone)]
 pub enum Exp {
     IDENT(String),                         // <id>
     INT(usize),                            // <int>
@@ -18,12 +20,14 @@ pub enum Exp {
     CALL(Box<Exp>, Vec<Box<Exp>>),         // <exp> (<exp>, ...)
 }
 
+#[derive(Debug, PartialEq, Clone)]
 // Unary operators
 pub enum UnaryOp {
     BANG,  // !
     MINUS, // -
 }
 
+#[derive(Debug, PartialEq, Clone)]
 // Binary operators
 pub enum BinaryOp {
     EQ,       // ==

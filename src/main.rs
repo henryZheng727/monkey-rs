@@ -39,7 +39,10 @@ fn main() {
             continue;
         }
 
+        // parse tokens
+        let program = parser::parse(tokens);
+
         // print results
-        println!("{:?}", tokens);
+        println!("{:?}", program);
     }
 }
