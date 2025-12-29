@@ -1,6 +1,7 @@
 mod lexer;
 mod parser;
 
+use crate::lexer::token::Token;
 use std::io::Write;
 
 fn main() {
@@ -22,8 +23,21 @@ fn main() {
 
         // lex input and validate tokens
         let tokens = lexer::lex(&input);
+        let mut lex_error = false;
 
-        // parse input
+        for token in tokens.iter() {
+            match token {
+                Token::ILLEGAL(char) => {
+                    lex_error = true;
+                    println!("Illegal character: {char}");
+                }
+                _ => continue,
+            }
+        }
+
+        if lex_error {
+            continue;
+        }
 
         // print results
         println!("{:?}", tokens);

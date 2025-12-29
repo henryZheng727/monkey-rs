@@ -8,24 +8,23 @@ use crate::lexer::token::Token;
 /// Given the program represented as a string, lex it into tokens.
 pub fn lex(program: &str) -> Vec<Token> {
     let mut tokens = Vec::new();
-    let mut curr_string: &str = &program;
+    let mut token: Token;
+    let mut rest_program: &str = &program;
 
     loop {
-        let (next_token, next_string) = next_token(curr_string);
-        match next_token {
-            Token::EOF => {
-                tokens.push(next_token);
-                break;
-            }
-            _ => tokens.push(next_token),
+        (token, rest_program) = next_token(rest_program);
+        tokens.push(token);
+        match tokens.last().unwrap() {
+            Token::EOF => break,
+            _ => continue,
         }
-        curr_string = next_string;
     }
 
     tokens
 }
 
 /// Given the program represented as a string, get the next token from it.
+/// Return the rest of the program (which has not been lexed).
 fn next_token(program: &str) -> (Token, &str) {
     // cut leading whitespace
     let program = eat_whitespace(program);
@@ -87,6 +86,8 @@ fn eat_whitespace(string: &str) -> &str {
     return &string[first_non_whitespace..];
 }
 
+/// Read an identifier from the start of the string.
+/// Return the rest of the string.
 fn read_ident(string: &str) -> (Token, &str) {
     // an identifier is [a-zA-Z_]+
     fn is_letter(c: char) -> bool {
@@ -122,6 +123,8 @@ fn read_ident(string: &str) -> (Token, &str) {
     return (lookup_ident(ident), rest);
 }
 
+/// Read an integer from the start of the string.
+/// Return the rest of the string.
 fn read_int(string: &str) -> (Token, &str) {
     // collect all integer characters at start of string
     let mut first_non_int = string.len();
