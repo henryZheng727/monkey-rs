@@ -4,7 +4,7 @@ use crate::parser::ast::Stmnt;
 use crate::parser::parse;
 
 #[test]
-fn test_parse_let_small() {
+fn test_parse_small() {
     let test_tokens = vec![
         Token::LET,
         Token::IDENT(String::from("x")),

@@ -5,6 +5,7 @@ pub enum Stmnt {
     RETURN(Exp),            // return <exp>
     EXPRESSION(Exp),        // <exp>
     BLOCK(Vec<Box<Stmnt>>), // { <stmnt>; ... }
+    ILLEGAL,                // failed to parse
 }
 
 // Expressions
@@ -18,6 +19,7 @@ pub enum Exp {
     IF(Box<Exp>, Box<Stmnt>, Box<Stmnt>),  // if <exp> <stmnt> (else <stmnt>)?
     FN(Vec<Box<Exp>>, Vec<Box<Stmnt>>),    // fn (<exp>, ...) { <stmnt>; ... }
     CALL(Box<Exp>, Vec<Box<Exp>>),         // <exp> (<exp>, ...)
+    ILLEGAL,                               // failed to parse
 }
 
 #[derive(Debug, PartialEq, Clone)]
