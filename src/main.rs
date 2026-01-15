@@ -7,8 +7,10 @@ use std::io::Write;
 fn main() {
     loop {
         // display the prompt
-        let _ = print!(">> ");
-        let _ = std::io::stdout().flush();
+        print!(">> ");
+        std::io::stdout()
+            .flush()
+            .expect("Cannot open interactive terminal.");
 
         // read input
         let mut input = String::new();
@@ -17,7 +19,7 @@ fn main() {
             .expect("Cannot open interactive terminal.");
 
         // close REPL on EOF
-        if read_bytes <= 0 {
+        if read_bytes == 0 {
             break;
         }
 
@@ -27,7 +29,7 @@ fn main() {
 
         for token in tokens.iter() {
             match token {
-                Token::ILLEGAL(char) => {
+                Token::Illegal(char) => {
                     lex_error = true;
                     println!("Illegal character: {char}");
                 }

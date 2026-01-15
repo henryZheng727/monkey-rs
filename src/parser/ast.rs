@@ -1,43 +1,43 @@
 // Statements
 #[derive(Debug, PartialEq, Clone)]
 pub enum Stmnt {
-    LET(String, Exp),       // let <id> = <exp>
-    RETURN(Exp),            // return <exp>
-    EXPRESSION(Exp),        // <exp>
-    BLOCK(Vec<Box<Stmnt>>), // { <stmnt>; ... }
-    ILLEGAL,                // failed to parse
+    Let(String, Exp),  // let <id> = <exp>
+    Return(Exp),       // return <exp>
+    Expression(Exp),   // <exp>
+    Block(Vec<Stmnt>), // { <stmnt>; ... }
+    Illegal,           // failed to parse
 }
 
 // Expressions
 #[derive(Debug, PartialEq, Clone)]
 pub enum Exp {
-    IDENT(String),                         // <id>
-    INT(usize),                            // <int>
-    BOOL(bool),                            // true | false
-    PREFIXOP(UnaryOp, Box<Exp>),           // [!-] <exp>
-    INFIXOP(Box<Exp>, BinaryOp, Box<Exp>), // <exp> <op> <exp>
-    IF(Box<Exp>, Box<Stmnt>, Box<Stmnt>),  // if <exp> <stmnt> (else <stmnt>)?
-    FN(Vec<Box<Exp>>, Vec<Box<Stmnt>>),    // fn (<exp>, ...) { <stmnt>; ... }
-    CALL(Box<Exp>, Vec<Box<Exp>>),         // <exp> (<exp>, ...)
-    ILLEGAL,                               // failed to parse
+    Ident(String),                         // <id>
+    Int(usize),                            // <int>
+    Bool(bool),                            // true | false
+    PrefixOp(UnaryOp, Box<Exp>),           // [!-] <exp>
+    InfixOp(Box<Exp>, BinaryOp, Box<Exp>), // <exp> <op> <exp>
+    If(Box<Exp>, Box<Stmnt>, Box<Stmnt>),  // if <exp> <stmnt> (else <stmnt>)?
+    Fn(Vec<Exp>, Vec<Stmnt>),              // fn (<exp>, ...) { <stmnt>; ... }
+    Call(Box<Exp>, Vec<Exp>),              // <exp> (<exp>, ...)
+    Illegal,                               // failed to parse
 }
 
 #[derive(Debug, PartialEq, Clone)]
 // Unary operators
 pub enum UnaryOp {
-    BANG,  // !
-    MINUS, // -
+    Bang,  // !
+    Minus, // -
 }
 
 #[derive(Debug, PartialEq, Clone)]
 // Binary operators
 pub enum BinaryOp {
-    EQ,       // ==
-    NOTEQ,    // !=
-    LT,       // <
-    GT,       // >
-    PLUS,     // +
-    MINUS,    // -
-    SLASH,    // /
-    ASTERISK, // *
+    Eq,       // ==
+    NotEq,    // !=
+    Lt,       // <
+    Gt,       // >
+    Plus,     // +
+    Minus,    // -
+    Slash,    // /
+    Asterisk, // *
 }

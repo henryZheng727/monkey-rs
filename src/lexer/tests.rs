@@ -4,15 +4,15 @@ use crate::lexer::*;
 fn test_lex_small() {
     let test_string = "=+(){},;";
     let expected = vec![
-        Token::ASSIGN,
-        Token::PLUS,
-        Token::LPAREN,
-        Token::RPAREN,
-        Token::LBRACE,
-        Token::RBRACE,
-        Token::COMMA,
-        Token::SEMICOLON,
-        Token::EOF,
+        Token::Assign,
+        Token::Plus,
+        Token::LParen,
+        Token::RParen,
+        Token::LBrace,
+        Token::RBrace,
+        Token::Comma,
+        Token::Semicolon,
+        Token::Eof,
     ];
     assert_eq!(expected, lex(test_string));
 }
@@ -21,15 +21,15 @@ fn test_lex_small() {
 fn test_lex_small_with_whitespace() {
     let test_string = "        =+(){},;       ";
     let expected = vec![
-        Token::ASSIGN,
-        Token::PLUS,
-        Token::LPAREN,
-        Token::RPAREN,
-        Token::LBRACE,
-        Token::RBRACE,
-        Token::COMMA,
-        Token::SEMICOLON,
-        Token::EOF,
+        Token::Assign,
+        Token::Plus,
+        Token::LParen,
+        Token::RParen,
+        Token::LBrace,
+        Token::RBrace,
+        Token::Comma,
+        Token::Semicolon,
+        Token::Eof,
     ];
     assert_eq!(expected, lex(test_string));
 }
@@ -45,43 +45,43 @@ fn test_lex_medium() {
             let result = add(five, ten);
         "#;
     let expected = vec![
-        Token::LET,
-        Token::IDENT(String::from("five")),
-        Token::ASSIGN,
-        Token::INT(5),
-        Token::SEMICOLON,
-        Token::LET,
-        Token::IDENT(String::from("ten")),
-        Token::ASSIGN,
-        Token::INT(10),
-        Token::SEMICOLON,
-        Token::LET,
-        Token::IDENT(String::from("add")),
-        Token::ASSIGN,
-        Token::FUNCTION,
-        Token::LPAREN,
-        Token::IDENT(String::from("x")),
-        Token::COMMA,
-        Token::IDENT(String::from("y")),
-        Token::RPAREN,
-        Token::LBRACE,
-        Token::IDENT(String::from("x")),
-        Token::PLUS,
-        Token::IDENT(String::from("y")),
-        Token::SEMICOLON,
-        Token::RBRACE,
-        Token::SEMICOLON,
-        Token::LET,
-        Token::IDENT(String::from("result")),
-        Token::ASSIGN,
-        Token::IDENT(String::from("add")),
-        Token::LPAREN,
-        Token::IDENT(String::from("five")),
-        Token::COMMA,
-        Token::IDENT(String::from("ten")),
-        Token::RPAREN,
-        Token::SEMICOLON,
-        Token::EOF,
+        Token::Let,
+        Token::Ident(String::from("five")),
+        Token::Assign,
+        Token::Int(5),
+        Token::Semicolon,
+        Token::Let,
+        Token::Ident(String::from("ten")),
+        Token::Assign,
+        Token::Int(10),
+        Token::Semicolon,
+        Token::Let,
+        Token::Ident(String::from("add")),
+        Token::Assign,
+        Token::Function,
+        Token::LParen,
+        Token::Ident(String::from("x")),
+        Token::Comma,
+        Token::Ident(String::from("y")),
+        Token::RParen,
+        Token::LBrace,
+        Token::Ident(String::from("x")),
+        Token::Plus,
+        Token::Ident(String::from("y")),
+        Token::Semicolon,
+        Token::RBrace,
+        Token::Semicolon,
+        Token::Let,
+        Token::Ident(String::from("result")),
+        Token::Assign,
+        Token::Ident(String::from("add")),
+        Token::LParen,
+        Token::Ident(String::from("five")),
+        Token::Comma,
+        Token::Ident(String::from("ten")),
+        Token::RParen,
+        Token::Semicolon,
+        Token::Eof,
     ];
     assert_eq!(expected, lex(test_string));
 }
@@ -89,21 +89,21 @@ fn test_lex_medium() {
 #[test]
 fn test_lex_illegal_small() {
     let test_string = "~";
-    let expected = vec![Token::ILLEGAL('~'), Token::EOF];
+    let expected = vec![Token::Illegal('~'), Token::Eof];
     assert_eq!(expected, lex(test_string));
 }
 
 #[test]
 fn test_lex_illegal_with_whitespace() {
     let test_string = "  ~   ~    ";
-    let expected = vec![Token::ILLEGAL('~'), Token::ILLEGAL('~'), Token::EOF];
+    let expected = vec![Token::Illegal('~'), Token::Illegal('~'), Token::Eof];
     assert_eq!(expected, lex(test_string));
 }
 
 #[test]
 fn test_lex_empty_string() {
     let test_string = "";
-    let expected = vec![Token::EOF];
+    let expected = vec![Token::Eof];
     assert_eq!(expected, lex(test_string));
 }
 
@@ -125,72 +125,72 @@ fn test_lex_large_no_multichar_ops() {
             }
         "#;
     let expected = vec![
-        Token::LET,
-        Token::IDENT(String::from("five")),
-        Token::ASSIGN,
-        Token::INT(5),
-        Token::SEMICOLON,
-        Token::LET,
-        Token::IDENT(String::from("ten")),
-        Token::ASSIGN,
-        Token::INT(10),
-        Token::SEMICOLON,
-        Token::LET,
-        Token::IDENT(String::from("add")),
-        Token::ASSIGN,
-        Token::FUNCTION,
-        Token::LPAREN,
-        Token::IDENT(String::from("x")),
-        Token::COMMA,
-        Token::IDENT(String::from("y")),
-        Token::RPAREN,
-        Token::LBRACE,
-        Token::IDENT(String::from("x")),
-        Token::PLUS,
-        Token::IDENT(String::from("y")),
-        Token::SEMICOLON,
-        Token::RBRACE,
-        Token::SEMICOLON,
-        Token::LET,
-        Token::IDENT(String::from("result")),
-        Token::ASSIGN,
-        Token::IDENT(String::from("add")),
-        Token::LPAREN,
-        Token::IDENT(String::from("five")),
-        Token::COMMA,
-        Token::IDENT(String::from("ten")),
-        Token::RPAREN,
-        Token::SEMICOLON,
-        Token::BANG,
-        Token::MINUS,
-        Token::SLASH,
-        Token::ASTERISK,
-        Token::INT(5),
-        Token::SEMICOLON,
-        Token::INT(5),
-        Token::LT,
-        Token::INT(10),
-        Token::GT,
-        Token::INT(5),
-        Token::SEMICOLON,
-        Token::IF,
-        Token::LPAREN,
-        Token::INT(5),
-        Token::LT,
-        Token::INT(10),
-        Token::RPAREN,
-        Token::LBRACE,
-        Token::RETURN,
-        Token::TRUE,
-        Token::SEMICOLON,
-        Token::RBRACE,
-        Token::ELSE,
-        Token::LBRACE,
-        Token::RETURN,
-        Token::FALSE,
-        Token::SEMICOLON,
-        Token::RBRACE,
-        Token::EOF,
+        Token::Let,
+        Token::Ident(String::from("five")),
+        Token::Assign,
+        Token::Int(5),
+        Token::Semicolon,
+        Token::Let,
+        Token::Ident(String::from("ten")),
+        Token::Assign,
+        Token::Int(10),
+        Token::Semicolon,
+        Token::Let,
+        Token::Ident(String::from("add")),
+        Token::Assign,
+        Token::Function,
+        Token::LParen,
+        Token::Ident(String::from("x")),
+        Token::Comma,
+        Token::Ident(String::from("y")),
+        Token::RParen,
+        Token::LBrace,
+        Token::Ident(String::from("x")),
+        Token::Plus,
+        Token::Ident(String::from("y")),
+        Token::Semicolon,
+        Token::RBrace,
+        Token::Semicolon,
+        Token::Let,
+        Token::Ident(String::from("result")),
+        Token::Assign,
+        Token::Ident(String::from("add")),
+        Token::LParen,
+        Token::Ident(String::from("five")),
+        Token::Comma,
+        Token::Ident(String::from("ten")),
+        Token::RParen,
+        Token::Semicolon,
+        Token::Bang,
+        Token::Minus,
+        Token::Slash,
+        Token::Asterisk,
+        Token::Int(5),
+        Token::Semicolon,
+        Token::Int(5),
+        Token::Lt,
+        Token::Int(10),
+        Token::Gt,
+        Token::Int(5),
+        Token::Semicolon,
+        Token::If,
+        Token::LParen,
+        Token::Int(5),
+        Token::Lt,
+        Token::Int(10),
+        Token::RParen,
+        Token::LBrace,
+        Token::Return,
+        Token::True,
+        Token::Semicolon,
+        Token::RBrace,
+        Token::Else,
+        Token::LBrace,
+        Token::Return,
+        Token::False,
+        Token::Semicolon,
+        Token::RBrace,
+        Token::Eof,
     ];
     assert_eq!(expected, lex(test_string));
 }
@@ -215,80 +215,80 @@ fn test_lex_large() {
             10 != 9;
         "#;
     let expected = vec![
-        Token::LET,
-        Token::IDENT(String::from("five")),
-        Token::ASSIGN,
-        Token::INT(5),
-        Token::SEMICOLON,
-        Token::LET,
-        Token::IDENT(String::from("ten")),
-        Token::ASSIGN,
-        Token::INT(10),
-        Token::SEMICOLON,
-        Token::LET,
-        Token::IDENT(String::from("add")),
-        Token::ASSIGN,
-        Token::FUNCTION,
-        Token::LPAREN,
-        Token::IDENT(String::from("x")),
-        Token::COMMA,
-        Token::IDENT(String::from("y")),
-        Token::RPAREN,
-        Token::LBRACE,
-        Token::IDENT(String::from("x")),
-        Token::PLUS,
-        Token::IDENT(String::from("y")),
-        Token::SEMICOLON,
-        Token::RBRACE,
-        Token::SEMICOLON,
-        Token::LET,
-        Token::IDENT(String::from("result")),
-        Token::ASSIGN,
-        Token::IDENT(String::from("add")),
-        Token::LPAREN,
-        Token::IDENT(String::from("five")),
-        Token::COMMA,
-        Token::IDENT(String::from("ten")),
-        Token::RPAREN,
-        Token::SEMICOLON,
-        Token::BANG,
-        Token::MINUS,
-        Token::SLASH,
-        Token::ASTERISK,
-        Token::INT(5),
-        Token::SEMICOLON,
-        Token::INT(5),
-        Token::LT,
-        Token::INT(10),
-        Token::GT,
-        Token::INT(5),
-        Token::SEMICOLON,
-        Token::IF,
-        Token::LPAREN,
-        Token::INT(5),
-        Token::LT,
-        Token::INT(10),
-        Token::RPAREN,
-        Token::LBRACE,
-        Token::RETURN,
-        Token::TRUE,
-        Token::SEMICOLON,
-        Token::RBRACE,
-        Token::ELSE,
-        Token::LBRACE,
-        Token::RETURN,
-        Token::FALSE,
-        Token::SEMICOLON,
-        Token::RBRACE,
-        Token::INT(10),
-        Token::EQ,
-        Token::INT(10),
-        Token::SEMICOLON,
-        Token::INT(10),
-        Token::NOTEQ,
-        Token::INT(9),
-        Token::SEMICOLON,
-        Token::EOF,
+        Token::Let,
+        Token::Ident(String::from("five")),
+        Token::Assign,
+        Token::Int(5),
+        Token::Semicolon,
+        Token::Let,
+        Token::Ident(String::from("ten")),
+        Token::Assign,
+        Token::Int(10),
+        Token::Semicolon,
+        Token::Let,
+        Token::Ident(String::from("add")),
+        Token::Assign,
+        Token::Function,
+        Token::LParen,
+        Token::Ident(String::from("x")),
+        Token::Comma,
+        Token::Ident(String::from("y")),
+        Token::RParen,
+        Token::LBrace,
+        Token::Ident(String::from("x")),
+        Token::Plus,
+        Token::Ident(String::from("y")),
+        Token::Semicolon,
+        Token::RBrace,
+        Token::Semicolon,
+        Token::Let,
+        Token::Ident(String::from("result")),
+        Token::Assign,
+        Token::Ident(String::from("add")),
+        Token::LParen,
+        Token::Ident(String::from("five")),
+        Token::Comma,
+        Token::Ident(String::from("ten")),
+        Token::RParen,
+        Token::Semicolon,
+        Token::Bang,
+        Token::Minus,
+        Token::Slash,
+        Token::Asterisk,
+        Token::Int(5),
+        Token::Semicolon,
+        Token::Int(5),
+        Token::Lt,
+        Token::Int(10),
+        Token::Gt,
+        Token::Int(5),
+        Token::Semicolon,
+        Token::If,
+        Token::LParen,
+        Token::Int(5),
+        Token::Lt,
+        Token::Int(10),
+        Token::RParen,
+        Token::LBrace,
+        Token::Return,
+        Token::True,
+        Token::Semicolon,
+        Token::RBrace,
+        Token::Else,
+        Token::LBrace,
+        Token::Return,
+        Token::False,
+        Token::Semicolon,
+        Token::RBrace,
+        Token::Int(10),
+        Token::Eq,
+        Token::Int(10),
+        Token::Semicolon,
+        Token::Int(10),
+        Token::NotEq,
+        Token::Int(9),
+        Token::Semicolon,
+        Token::Eof,
     ];
     assert_eq!(expected, lex(test_string));
 }
@@ -324,41 +324,41 @@ fn test_eat_whitespace_newlines() {
 #[test]
 fn test_read_ident_small() {
     let test_string = "test the following";
-    let expected = (Token::IDENT(String::from("test")), " the following");
+    let expected = (Token::Ident(String::from("test")), " the following");
     assert_eq!(expected, read_ident(test_string));
 }
 
 #[test]
 fn test_read_ident_one_char() {
     let test_string = "a b c";
-    let expected = (Token::IDENT(String::from("a")), " b c");
+    let expected = (Token::Ident(String::from("a")), " b c");
     assert_eq!(expected, read_ident(test_string));
 }
 
 #[test]
 fn test_read_ident_full_string() {
     let test_string = "tokenisfullstring";
-    let expected = (Token::IDENT(String::from("tokenisfullstring")), "");
+    let expected = (Token::Ident(String::from("tokenisfullstring")), "");
     assert_eq!(expected, read_ident(test_string));
 }
 
 #[test]
 fn test_read_int_small() {
     let test_string = "1234 test";
-    let expected = (Token::INT(1234), " test");
+    let expected = (Token::Int(1234), " test");
     assert_eq!(expected, read_int(test_string));
 }
 
 #[test]
 fn test_read_int_one_char() {
     let test_string = "1 2 3";
-    let expected = (Token::INT(1), " 2 3");
+    let expected = (Token::Int(1), " 2 3");
     assert_eq!(expected, read_int(test_string));
 }
 
 #[test]
 fn test_read_int_full_string() {
     let test_string = "1234";
-    let expected = (Token::INT(1234), "");
+    let expected = (Token::Int(1234), "");
     assert_eq!(expected, read_int(test_string));
 }

@@ -1,38 +1,38 @@
 #[derive(Debug, PartialEq, Clone)]
 pub enum Token {
-    ILLEGAL(char),
-    EOF,
+    Illegal(char),
+    Eof,
 
     // IDENTIFIERS AND LITERALS
-    IDENT(String),
-    INT(usize),
+    Ident(String),
+    Int(usize),
 
     // OPERATORS
-    ASSIGN,   // "="
-    EQ,       // "=="
-    PLUS,     // "+"
-    MINUS,    // "-"
-    BANG,     // "!"
-    NOTEQ,    // "!="
-    ASTERISK, // "*"
-    SLASH,    // "/"
-    LT,       // "<"
-    GT,       // ">"
+    Assign,   // "="
+    Eq,       // "=="
+    Plus,     // "+"
+    Minus,    // "-"
+    Bang,     // "!"
+    NotEq,    // "!="
+    Asterisk, // "*"
+    Slash,    // "/"
+    Lt,       // "<"
+    Gt,       // ">"
 
     // DELIMITERS
-    COMMA,     // ","
-    SEMICOLON, // ";"
-    LPAREN,    // "("
-    RPAREN,    // ")"
-    LBRACE,    // "{"
-    RBRACE,    // "}"
+    Comma,     // ","
+    Semicolon, // ";"
+    LParen,    // "("
+    RParen,    // ")"
+    LBrace,    // "{"
+    RBrace,    // "}"
 
     // KEYWORDS
-    FUNCTION, // "fn"
-    LET,      // "let"
-    TRUE,     // "true"
-    FALSE,    // "false"
-    IF,       // "if"
-    ELSE,     // "else"
-    RETURN,   // "return"
+    Function, // "fn"
+    Let,      // "let"
+    True,     // "true"
+    False,    // "false"
+    If,       // "if"
+    Else,     // "else"
+    Return,   // "return"
 }
