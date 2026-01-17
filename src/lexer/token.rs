@@ -1,10 +1,11 @@
 #[derive(Debug, PartialEq, Clone)]
 pub enum Token {
     Illegal(char),
-    Eof,
+    EoF,
 
     // IDENTIFIERS AND LITERALS
     Ident(String),
+    Bool(bool),
     Int(usize),
 
     // OPERATORS
@@ -30,8 +31,6 @@ pub enum Token {
     // KEYWORDS
     Function, // "fn"
     Let,      // "let"
-    True,     // "true"
-    False,    // "false"
     If,       // "if"
     Else,     // "else"
     Return,   // "return"

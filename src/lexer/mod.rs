@@ -15,7 +15,7 @@ pub fn lex(program: &str) -> Vec<Token> {
         (token, rest_program) = next_token(rest_program);
         tokens.push(token);
         match tokens.last().unwrap() {
-            Token::Eof => break,
+            Token::EoF => break,
             _ => continue,
         }
     }
@@ -67,7 +67,7 @@ fn next_token(program: &str) -> (Token, &str) {
             '0'..='9' => read_int(program),
             _ => (Token::Illegal(char), &program[1..]),
         },
-        None => (Token::Eof, program),
+        None => (Token::EoF, program),
     }
 }
 
@@ -99,8 +99,8 @@ fn read_ident(string: &str) -> (Token, &str) {
         match string {
             "fn" => Token::Function,
             "let" => Token::Let,
-            "true" => Token::True,
-            "false" => Token::False,
+            "true" => Token::Bool(true),
+            "false" => Token::Bool(false),
             "if" => Token::If,
             "else" => Token::Else,
             "return" => Token::Return,

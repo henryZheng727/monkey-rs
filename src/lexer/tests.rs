@@ -12,7 +12,7 @@ fn test_lex_small() {
         Token::RBrace,
         Token::Comma,
         Token::Semicolon,
-        Token::Eof,
+        Token::EoF,
     ];
     assert_eq!(expected, lex(test_string));
 }
@@ -29,7 +29,7 @@ fn test_lex_small_with_whitespace() {
         Token::RBrace,
         Token::Comma,
         Token::Semicolon,
-        Token::Eof,
+        Token::EoF,
     ];
     assert_eq!(expected, lex(test_string));
 }
@@ -81,7 +81,7 @@ fn test_lex_medium() {
         Token::Ident(String::from("ten")),
         Token::RParen,
         Token::Semicolon,
-        Token::Eof,
+        Token::EoF,
     ];
     assert_eq!(expected, lex(test_string));
 }
@@ -89,21 +89,21 @@ fn test_lex_medium() {
 #[test]
 fn test_lex_illegal_small() {
     let test_string = "~";
-    let expected = vec![Token::Illegal('~'), Token::Eof];
+    let expected = vec![Token::Illegal('~'), Token::EoF];
     assert_eq!(expected, lex(test_string));
 }
 
 #[test]
 fn test_lex_illegal_with_whitespace() {
     let test_string = "  ~   ~    ";
-    let expected = vec![Token::Illegal('~'), Token::Illegal('~'), Token::Eof];
+    let expected = vec![Token::Illegal('~'), Token::Illegal('~'), Token::EoF];
     assert_eq!(expected, lex(test_string));
 }
 
 #[test]
 fn test_lex_empty_string() {
     let test_string = "";
-    let expected = vec![Token::Eof];
+    let expected = vec![Token::EoF];
     assert_eq!(expected, lex(test_string));
 }
 
@@ -181,16 +181,16 @@ fn test_lex_large_no_multichar_ops() {
         Token::RParen,
         Token::LBrace,
         Token::Return,
-        Token::True,
+        Token::Bool(true),
         Token::Semicolon,
         Token::RBrace,
         Token::Else,
         Token::LBrace,
         Token::Return,
-        Token::False,
+        Token::Bool(false),
         Token::Semicolon,
         Token::RBrace,
-        Token::Eof,
+        Token::EoF,
     ];
     assert_eq!(expected, lex(test_string));
 }
@@ -271,13 +271,13 @@ fn test_lex_large() {
         Token::RParen,
         Token::LBrace,
         Token::Return,
-        Token::True,
+        Token::Bool(true),
         Token::Semicolon,
         Token::RBrace,
         Token::Else,
         Token::LBrace,
         Token::Return,
-        Token::False,
+        Token::Bool(false),
         Token::Semicolon,
         Token::RBrace,
         Token::Int(10),
@@ -288,7 +288,7 @@ fn test_lex_large() {
         Token::NotEq,
         Token::Int(9),
         Token::Semicolon,
-        Token::Eof,
+        Token::EoF,
     ];
     assert_eq!(expected, lex(test_string));
 }
