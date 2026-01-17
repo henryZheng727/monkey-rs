@@ -23,7 +23,7 @@ pub fn parse(tokens: Vec<Token>) -> Vec<Stmnt> {
         }
         program.push(next_statement);
         match rest_tokens.first().unwrap() {
-            Token::Eof => break, // unwrap is safe because EOF always exists
+            Token::EoF => break, // unwrap is safe because EOF always exists
             _ => continue,
         }
     }

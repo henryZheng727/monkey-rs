@@ -2,6 +2,7 @@
 mod tests;
 
 use crate::lexer::token::Token;
+use crate::parser::ast::Exp;
 use crate::parser::ast::Stmnt;
 use crate::parser::parse_exp::parse_exp;
 
@@ -23,5 +24,8 @@ fn parse_return(tokens: &[Token]) -> (Stmnt, &[Token]) {
 
 fn parse_expression(tokens: &[Token]) -> (Stmnt, &[Token]) {
     let (exp, rest) = parse_exp(tokens, 0);
-    (Stmnt::Expression(exp), rest)
+    match exp {
+        Exp::Illegal => (Stmnt::Illegal, rest),
+        _ => (Stmnt::Exp(exp), rest),
+    }
 }

@@ -3,7 +3,7 @@
 pub enum Stmnt {
     Let(String, Exp),  // let <id> = <exp>
     Return(Exp),       // return <exp>
-    Expression(Exp),   // <exp>
+    Exp(Exp),          // <exp>
     Block(Vec<Stmnt>), // { <stmnt>; ... }
     Illegal,           // failed to parse
 }
