@@ -41,3 +41,12 @@ pub enum BinaryOp {
     Slash,    // /
     Asterisk, // *
 }
+
+pub enum Precedence {
+    Lowest,         // default lowest precedence
+    Equals,         // (a == b) or (a != b)
+    Comparison,     // (a < b) or (a > b)
+    Addition,       // (a + b) or (a - b)
+    Multiplication, // (a * b) or (a / b)
+    Prefix,         // (-a) or (!a)
+}

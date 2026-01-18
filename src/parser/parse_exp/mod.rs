@@ -2,9 +2,9 @@
 mod tests;
 
 use crate::lexer::token::Token;
-use crate::parser::ast::Exp;
+use crate::parser::ast::{Exp, Precedence, UnaryOp};
 
-pub(super) fn parse_exp(tokens: &[Token], prec: u8) -> (Exp, &[Token]) {
+pub(super) fn parse_exp(tokens: &[Token], prec: Precedence) -> (Exp, &[Token]) {
     unimplemented!()
 }
 
@@ -29,10 +29,21 @@ fn parse_bool(tokens: &[Token]) -> (Exp, &[Token]) {
     }
 }
 
-fn parse_prefix_op(tokens: &[Token]) -> (Exp, &[Token]) {
-    unimplemented!()
+fn parse_prefix(tokens: &[Token]) -> (Exp, &[Token]) {
+    // determine the operator
+    let op = match tokens.first().unwrap() {
+        Token::Bang => UnaryOp::Bang,
+        Token::Minus => UnaryOp::Minus,
+        _ => return (Exp::Illegal, tokens),
+    };
+
+    let (exp, rest_tokens) = parse_exp(&tokens[1..], Precedence::Prefix);
+    match exp {
+        Exp::Illegal => (Exp::Illegal, rest_tokens),
+        _ => (Exp::PrefixOp(op, Box::new(exp)), rest_tokens),
+    }
 }
 
-fn parse_infix_op(tokens: &[Token]) -> (Exp, &[Token]) {
+fn parse_infix(tokens: &[Token]) -> (Exp, &[Token]) {
     unimplemented!()
 }
