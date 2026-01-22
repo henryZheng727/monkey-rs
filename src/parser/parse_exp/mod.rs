@@ -2,9 +2,9 @@
 mod tests;
 
 use crate::lexer::token::Token;
-use crate::parser::ast::{Exp, Precedence, UnaryOp};
+use crate::parser::ast::{Exp, Prec, UnaryOp};
 
-pub(super) fn parse_exp(tokens: &[Token], prec: Precedence) -> (Exp, &[Token]) {
+pub(super) fn parse_exp(tokens: &[Token], prec: Prec) -> (Exp, &[Token]) {
     unimplemented!()
 }
 
@@ -37,7 +37,7 @@ fn parse_prefix(tokens: &[Token]) -> (Exp, &[Token]) {
         _ => return (Exp::Illegal, tokens),
     };
 
-    let (exp, rest_tokens) = parse_exp(&tokens[1..], Precedence::Prefix);
+    let (exp, rest_tokens) = parse_exp(&tokens[1..], Prec::Prefix);
     match exp {
         Exp::Illegal => (Exp::Illegal, rest_tokens),
         _ => (Exp::PrefixOp(op, Box::new(exp)), rest_tokens),

@@ -42,7 +42,7 @@ pub enum BinaryOp {
     Asterisk, // *
 }
 
-pub enum Precedence {
+pub enum Prec {
     Lowest,         // default lowest precedence
     Equals,         // (a == b) or (a != b)
     Comparison,     // (a < b) or (a > b)

@@ -2,7 +2,7 @@
 mod tests;
 
 use crate::lexer::token::Token;
-use crate::parser::ast::{Exp, Precedence, Stmnt};
+use crate::parser::ast::{Exp, Prec, Stmnt};
 use crate::parser::parse_exp::parse_exp;
 
 /// Given a list of tokens, parse a statement from the start of the list.
@@ -33,8 +33,8 @@ pub(super) fn parse_stmnt(tokens: &[Token]) -> (Stmnt, &[Token]) {
 ///
 /// We would feed into the parser:
 /// ```
-/// [Token::Ident(String::from("x"), Token::Eq, Token::Int(5), Token::Semicolon,
-///     Token::EoF]
+/// [Token::Ident(String::from("x"), Token::Eq, Token::Int(5),
+///     Token::Semicolon, Token::EoF]
 /// ```
 /// And it would output
 /// ```
@@ -55,7 +55,7 @@ fn parse_let(tokens: &[Token]) -> (Stmnt, &[Token]) {
     };
 
     // parse an expression
-    let (exp, tokens) = match parse_exp(tokens, Precedence::Lowest) {
+    let (exp, tokens) = match parse_exp(tokens, Prec::Lowest) {
         (Exp::Illegal, rest_tokens) => return (Stmnt::Illegal, rest_tokens),
         ok => ok,
     };
@@ -87,7 +87,7 @@ fn parse_let(tokens: &[Token]) -> (Stmnt, &[Token]) {
 /// ```
 fn parse_return(tokens: &[Token]) -> (Stmnt, &[Token]) {
     // expect an expression
-    let (exp, tokens) = parse_exp(tokens, Precedence::Lowest);
+    let (exp, tokens) = parse_exp(tokens, Prec::Lowest);
     let (return_stmnt, tokens) = match exp {
         Exp::Illegal => (Stmnt::Illegal, tokens),
         _ => (Stmnt::Return(exp), tokens),
@@ -103,7 +103,7 @@ fn parse_return(tokens: &[Token]) -> (Stmnt, &[Token]) {
 /// Given a list of tokens, parse it as an expression.
 /// We return the statement, and the rest of the unconsumed tokens.
 fn parse_expression(tokens: &[Token]) -> (Stmnt, &[Token]) {
-    let (exp, tokens) = parse_exp(tokens, Precedence::Lowest);
+    let (exp, tokens) = parse_exp(tokens, Prec::Lowest);
     match exp {
         Exp::Illegal => (Stmnt::Illegal, tokens),
         _ => (Stmnt::Exp(exp), tokens),
